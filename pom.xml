@@ -1,0 +1,19 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.vanillage.validusername</groupId>
+  <artifactId>validusername</artifactId>
+  <version>1.0</version>
+  <name>ValidUsername</name>
+  <dependencies>
+    <dependency>
+      <groupId>com.vanillage.minecraftalphaserver</groupId>
+      <artifactId>minecraftalphaserver</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/minecraft_server_unobfuscated.jar</systemPath>
+    </dependency>
+  </dependencies>
+  <build>
+    <finalName>ValidUsername</finalName>
+  </build>
+</project>
