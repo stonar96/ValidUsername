@@ -5,13 +5,13 @@ import com.vanillage.minecraftalphaserver.plugin.Plugin;
 
 public final class ValidUsername extends Plugin {
     @Override
-    public void onEnable() {
+    protected void onEnable() {
         getMinecraftServer().getPluginManager().getEventManager().registerListener((PlayerLoggedInListener) new ValidUsernamePlayerLoggedInListener(this));
         getMinecraftServer().log(getName() + " enabled");
     }
 
     @Override
-    public void onDisable() {
+    protected void onDisable() {
         getMinecraftServer().log(getName() + " disabled");
     }
 }

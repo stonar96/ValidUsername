@@ -7,12 +7,11 @@ import com.vanillage.minecraftalphaserver.event.PlayerLoggedInListener;
 
 public final class ValidUsernamePlayerLoggedInListener extends PlayerLoggedInListener {
     private final ValidUsername plugin;
-    private final int priority;
     private Pattern userNamePattern;
     private String kickReason;
 
     public ValidUsernamePlayerLoggedInListener(ValidUsername plugin) {
-        this(plugin, -10, null, null);
+        this(plugin, -20, null, null);
     }
 
     public ValidUsernamePlayerLoggedInListener(ValidUsername plugin, int priority) {
@@ -20,11 +19,11 @@ public final class ValidUsernamePlayerLoggedInListener extends PlayerLoggedInLis
     }
 
     public ValidUsernamePlayerLoggedInListener(ValidUsername plugin, Pattern userNamePattern) {
-        this(plugin, -10, userNamePattern, null);
+        this(plugin, -20, userNamePattern, null);
     }
 
     public ValidUsernamePlayerLoggedInListener(ValidUsername plugin, String kickReason) {
-        this(plugin, -10, null, kickReason);
+        this(plugin, -20, null, kickReason);
     }
 
     public ValidUsernamePlayerLoggedInListener(ValidUsername plugin, int priority, Pattern userNamePattern) {
@@ -36,16 +35,17 @@ public final class ValidUsernamePlayerLoggedInListener extends PlayerLoggedInLis
     }
 
     public ValidUsernamePlayerLoggedInListener(ValidUsername plugin, Pattern userNamePattern, String kickReason) {
-        this(plugin, -10, userNamePattern, kickReason);
+        this(plugin, -20, userNamePattern, kickReason);
     }
 
     public ValidUsernamePlayerLoggedInListener(ValidUsername plugin, int priority, Pattern userNamePattern, String kickReason) {
+        super(priority);
+
         if (plugin == null) {
             throw new IllegalArgumentException("plugin cannot be null");
         }
 
         this.plugin = plugin;
-        this.priority = priority;
         this.userNamePattern = userNamePattern == null ? Pattern.compile("[A-Za-z0-9_]{2,16}") : userNamePattern;
         this.kickReason = kickReason == null ? "Invalid username <username>, try: " + this.userNamePattern.pattern() : kickReason;
     }
@@ -79,15 +79,10 @@ public final class ValidUsernamePlayerLoggedInListener extends PlayerLoggedInLis
     }
 
     @Override
-    public void onEvent(PlayerLoggedInEvent event) {
+    protected void onEvent(PlayerLoggedInEvent event) {
         if (!userNamePattern.matcher(event.getPacket().username).matches()) {
             event.setKickReason(kickReason.replace("<username>", event.getPacket().username));
             event.deny();
         }
-    }
-
-    @Override
-    public int getPriority() {
-        return priority;
     }
 }
